@@ -1,9 +1,10 @@
 from discord.ext import commands
-from utils import path_finder
-from utils import pokedex
+from cogs.utils import path_finder
+from cogs.utils import pokedex
 
 import discord
 import random
+
 
 class PokeGame(commands.Cog):
     def __init__(self, bot):
