@@ -1,6 +1,6 @@
 from discord.ext import commands
+from library.utils import pokedex
 from cogs.utils import path_finder
-from cogs.utils import pokedex
 
 import discord
 import random

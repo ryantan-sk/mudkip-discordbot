@@ -1,7 +1,8 @@
 from discord.ext import commands
-from cogs.utils.colour import ColourCode
+from misc.colour import ColourCode
 
 import discord
+
 
 class ModCommands(commands.Cog):
     def __init__(self, bot):
@@ -43,3 +44,7 @@ class ModCommands(commands.Cog):
     async def _unmute(self, ctx, member: discord.Member, *, reason=None):
         newcomer = discord.utils.get(ctx.guild.roles, name='Peasant')
         await member.add_roles(newcomer, reason=reason)
+
+
+def setup(bot):
+    bot.add_cog(ModCommands(bot))

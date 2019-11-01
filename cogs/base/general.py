@@ -3,9 +3,13 @@ from discord.ext import commands
 import discord
 
 
-class Events(commands.Cog):
+class GeneralFunctions(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.Cog.listener()
+    async def on_ready(self):
+        print('Bot ready.')
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -22,3 +26,23 @@ class Events(commands.Cog):
 
         newcomer_role = discord.utils.get(member.guild.roles, name='Peasant')
         await member.add_roles(newcomer_role)
+
+    @commands.command()
+    async def load(self, cog):
+        try:
+            self.bot.load_extension(cog)
+            print(f'Loaded {cog}')
+        except Exception as error:
+            print(f'{cog} failed to load. Error occurred: {error}')
+
+    @commands.command()
+    async def unload(self, cog):
+        try:
+            self.bot.unload_extension(cog)
+            print(f'Unloaded {cog}')
+        except Exception as error:
+            print(f'{cog} failed to unload. Error occurred: {error}')
+
+
+def setup(bot):
+    bot.add_cog(GeneralFunctions(bot))

@@ -1,0 +1,32 @@
+{
+  "1" : {
+    "line_1": "What did one snowman say to the other?",
+    "line_2": "Do you smell carrots? \u26C4"
+  },
+
+  "2": {
+    "line_1": "How do robots eat guacamole?",
+    "line_2": "With computer chips. \uD83D\uDCBB "
+  },
+
+  "3": {
+    "line_1": "I renamed my iPhone the Titanic",
+    "Line_2": "Every time I plug it in, the Titanic is syncing. \uD83D\uDEA2"
+  },
+
+  "4": {
+    "line_1": "John had his whole left side cut off.",
+    "line_2": "Guess he's alright now. \uD83D\uDE0F"
+  },
+
+  "5": {
+    "line_1": "What do you call a bee that can't make up his mind?",
+    "line_2": "A maybe. \uD83D\uDC1D"
+  },
+
+  "6":{
+    "line_1": "What did the janitor say when he jumped out of the closet?",
+    "line-2": "SUPPLIES! \uD83D\uDE2C"
+  }
+
+}
