@@ -1,5 +1,5 @@
 from discord.ext import commands
-from misc.colour import ColourCode
+from cogs.library.misc.colour import ColourCode
 
 import discord
 

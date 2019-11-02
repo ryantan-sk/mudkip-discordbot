@@ -1,28 +1,33 @@
 from discord.ext import commands
-from library.utils import pokedex
 from cogs.utils import path_finder
 
 import discord
 import random
+import json
+
+
+# noinspection SpellCheckingInspection
 
 
 class PokeGame(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.game_instance = False
-        self.question_paths = path_finder.file_paths("images\\pokegame_questions")
-        self.answer_paths = path_finder.file_paths("images\\pokegame_answers")
-
+        self.question_paths = path_finder.file_paths("cogs\\library\\games-files\\pokegame\\pokegame_questions")
+        self.answer_paths = path_finder.file_paths("cogs\\library\\games-files\\pokegame\\pokegame_answers")
+        self.pokedex = get_pokedex()
         self.identity = 0
 
     @commands.command(name="pokegame")
     async def pokegame_start(self, ctx):
         if not self.game_instance:
             self.game_instance = True
-            i = random.randint(0, len(self.question_paths))
+            i = random.randint(0, len(self.question_paths) - 1)
 
             self.identity = i
-            await ctx.channel.send("Who's that pokemon?", file=discord.File(self.question_paths[i]))
+            await ctx.channel.send("Who's that pokemon?"
+                                   "\n!guess to guess the pokemon"
+                                   "\n!repeat to repeat the question", file=discord.File(self.question_paths[i]))
 
         else:
             await ctx.channel.send("Game is currently in session. Please wait for the next round.")
@@ -31,7 +36,9 @@ class PokeGame(commands.Cog):
     async def pokegame_repeat(self, ctx):
         if self.game_instance:
             question = discord.File(self.question_paths[self.identity])
-            await ctx.channel.send("Who's that pokemon?", file=question)
+            await ctx.channel.send("Who's that pokemon?"
+                                   "\n!guess to guess the pokemon"
+                                   "\n!repeat to repeat the question", file=question)
         else:
             await ctx.channel.send("There is no on-going game session right now.")
 
@@ -41,16 +48,23 @@ class PokeGame(commands.Cog):
         answer_lower = message.lower()
         if self.game_instance:
             pokedex_number = path_finder.file_name(self.answer_paths[self.identity])
-            answer = pokedex.pokedex_dict[pokedex_number]
+            answer = self.pokedex[pokedex_number]
+
             answer_file = discord.File(self.answer_paths[self.identity])
 
             if answer_lower == answer:
                 self.game_instance = False
                 await channel.send(f"Congratulations {ctx.author.mention}! It was {answer.title()}",
-                                   file = answer_file)
-
-            else:
-                await channel.send(f"Wrong answer! {ctx.author.mention} is a noob.")
-
+                                   file=answer_file)
         else:
-            await channel.send("There is no on-going game session right now.")
+            pass
+
+
+def get_pokedex():
+    with open("cogs\\library\\games-files\\pokegame\\pokedex.json") as file:
+        pokedex = json.load(file)
+    return pokedex
+
+
+def setup(bot):
+    bot.add_cog(PokeGame(bot))

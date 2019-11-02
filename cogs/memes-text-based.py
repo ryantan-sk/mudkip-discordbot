@@ -1,6 +1,6 @@
 from cogs.utils import path_finder
 from discord.ext import commands
-from cogs.memes.text import lenny
+from cogs.library.memes.text import lenny
 
 import json
 import random
@@ -9,7 +9,7 @@ import random
 class TextBasedMemes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.all_paths = path_finder.file_paths("cogs\\memes\\text")
+        self.all_paths = path_finder.file_paths("cogs\\library\\memes\\text")
 
     @commands.command(name="inspire")
     async def _inspire(self, ctx):

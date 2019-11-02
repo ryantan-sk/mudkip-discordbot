@@ -12,10 +12,11 @@ def get_prefix(bot, message):
 bot = commands.Bot(command_prefix=get_prefix)
 
 cogs = (
-    "cogs.base.general",
-    "cogs.base.moderator",
-    "cogs.memes.textmemes",
-    "cogs.memes.image-based-memes"
+    "cogs.general",
+    "cogs.moderator",
+    "cogs.memes-text-based",
+    "cogs.memes-image-based",
+    "cogs.games-pokemon-guess"
 )
 
 if __name__ == '__main__':
