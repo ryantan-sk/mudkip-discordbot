@@ -25,26 +25,25 @@ class PokeGame(commands.Cog):
             i = random.randint(0, len(self.question_paths) - 1)
 
             self.identity = i
-            await ctx.channel.send("Who's that pokemon?"
-                                   "\n!guess to guess the pokemon"
-                                   "\n!repeat to repeat the question", file=discord.File(self.question_paths[i]))
+            await ctx.send("Who's that pokemon?"
+                            "\n!guess to guess the pokemon"
+                            "\n!repeat to repeat the question", file=discord.File(self.question_paths[i]))
 
         else:
-            await ctx.channel.send("Game is currently in session. Please wait for the next round.")
+            await ctx.send("Game is currently in session. Please wait for the next round.")
 
     @commands.command(name="repeat")
     async def pokegame_repeat(self, ctx):
         if self.game_instance:
             question = discord.File(self.question_paths[self.identity])
-            await ctx.channel.send("Who's that pokemon?"
+            await ctx.send("Who's that pokemon?"
                                    "\n!guess to guess the pokemon"
                                    "\n!repeat to repeat the question", file=question)
         else:
-            await ctx.channel.send("There is no on-going game session right now.")
+            await ctx.send("There is no on-going game session right now.")
 
     @commands.command(name="guess")
     async def pokegame_guess(self, ctx, message):
-        channel = ctx.channel
         answer_lower = message.lower()
         if self.game_instance:
             pokedex_number = path_finder.file_name(self.answer_paths[self.identity])
@@ -54,7 +53,7 @@ class PokeGame(commands.Cog):
 
             if answer_lower == answer:
                 self.game_instance = False
-                await channel.send(f"Congratulations {ctx.author.mention}! It was {answer.title()}",
+                await ctx.send(f"Congratulations {ctx.author.mention}! It was {answer.title()}",
                                    file=answer_file)
         else:
             pass

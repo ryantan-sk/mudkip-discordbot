@@ -10,27 +10,43 @@ class TextBasedMemes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.all_paths = path_finder.file_paths("cogs\\library\\memes\\text")
+        self.cost = 100
 
     @commands.command(name="inspire")
     async def _inspire(self, ctx):
-        channel = ctx.channel
+        economy = self.bot.get_cog("Economy")
+        author = ctx.author
 
-        quote = load_meme(self.all_paths, 0)
-        await channel.send(f"{quote}")
+        if economy.get_balance(author) > 0:
+            await economy.withdraw(author, self.cost)
+            quote = load_meme(self.all_paths, 0)
+            await ctx.send(f"{quote}")
+        else:
+            await ctx.send(f"{author.mention} you have insufficient funds.")
 
     @commands.command(name="lenny")
     async def _lenny(self, ctx):
-        channel = ctx.channel
+        economy = self.bot.get_cog("Economy")
+        author = ctx.author
 
-        lenny_choice = random.choice(lenny.lenny_emojis)
-        await channel.send(f"{lenny_choice}")
+        if economy.get_balance(author) > 0:
+            await economy.withdraw(author, self.cost)
+            lenny_choice = random.choice(lenny.lenny_emojis)
+            await ctx.send(f"{lenny_choice}")
+        else:
+            await ctx.send(f"{author.mention} you have insufficient funds.")
 
     @commands.command(name="pun")
-    async def _joke(self, ctx):
-        channel = ctx.channel
+    async def _pun(self, ctx):
+        economy = self.bot.get_cog("Economy")
+        author = ctx.author
 
-        joke = load_meme(self.all_paths, 2)
-        await channel.send(f"{joke}")
+        if economy.get_balance(author) > 0:
+            await economy.withdraw(author, self.cost)
+            pun = load_meme(self.all_paths, 2)
+            await ctx.send(f"{pun}")
+        else:
+            await ctx.send(f"{author.mention} you have insufficient funds.")
 
 
 def load_meme(path_list, meme_type):

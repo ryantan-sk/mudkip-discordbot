@@ -16,7 +16,8 @@ cogs = (
     "cogs.moderator",
     "cogs.memes-text-based",
     "cogs.memes-image-based",
-    "cogs.games-pokemon-guess"
+    "cogs.games-pokemon-guess",
+    "cogs.economy"
 )
 
 if __name__ == '__main__':
