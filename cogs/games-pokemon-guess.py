@@ -17,6 +17,7 @@ class PokeGame(commands.Cog):
         self.answer_paths = path_finder.file_paths("cogs\\library\\games-files\\pokegame\\pokegame_answers")
         self.pokedex = get_pokedex()
         self.identity = 0
+        self.winnings= 1000
 
     @commands.command(name="pokegame")
     async def pokegame_start(self, ctx):
@@ -45,6 +46,9 @@ class PokeGame(commands.Cog):
     @commands.command(name="guess")
     async def pokegame_guess(self, ctx, message):
         answer_lower = message.lower()
+        economy = self.bot.get_cog("Economy")
+        author = ctx.author
+
         if self.game_instance:
             pokedex_number = path_finder.file_name(self.answer_paths[self.identity])
             answer = self.pokedex[pokedex_number]
@@ -52,8 +56,10 @@ class PokeGame(commands.Cog):
             answer_file = discord.File(self.answer_paths[self.identity])
 
             if answer_lower == answer:
+                await economy.deposit(author, self.winnings)
                 self.game_instance = False
-                await ctx.send(f"Congratulations {ctx.author.mention}! It was {answer.title()}",
+                await ctx.send(f"Congratulations {ctx.author.mention}! It was {answer.title()}! "
+                               f"$1000 was added to your balance",
                                    file=answer_file)
         else:
             pass

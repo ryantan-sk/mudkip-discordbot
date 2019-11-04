@@ -34,7 +34,10 @@ class Economy(commands.Cog):
         if member_id in data:
             pass
         else:
-            data[member]["balance"] = "1000"
+            data[member_id] = {
+                "balance": "1000",
+                "member-name": member.name
+            }
             save_data(self.path, data)
 
     def get_balance(self, member):
