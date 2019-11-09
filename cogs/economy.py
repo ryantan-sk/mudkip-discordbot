@@ -68,11 +68,6 @@ class Economy(commands.Cog):
         with open(self.path, "w") as file:
             json.dump(data, file, indent=2, sort_keys=True)
 
-    @_initialize.error
-    async def _initialize_error_handler(self, ctx, error):
-        if isinstance(error, commands.MissingAnyRole):
-            pass
-
 
 def get_data(path):
     with open(path) as file:

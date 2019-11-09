@@ -20,6 +20,7 @@ class PokeGame(commands.Cog):
         self.winnings= 1000
 
     @commands.command(name="pokegame")
+    @commands.cooldown(1, 15, commands.BucketType.channel)
     async def pokegame_start(self, ctx):
         if not self.game_instance:
             self.game_instance = True

@@ -4,7 +4,7 @@ import traceback
 import sys
 
 
-class CommandErrorHandler(commands.Cogs):
+class CommandErrorHandler(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -16,11 +16,15 @@ class CommandErrorHandler(commands.Cogs):
 
         # Tuple ignoring wrong user input or unknown commands
         ignored = (commands.UserInputError, commands.CommandNotFound)
+        permission = (commands.MissingAnyRole, commands.MissingPermissions, commands.MissingRole)
 
         error = getattr(error, 'original', error)
 
         if isinstance(error, ignored):
             return
+
+        elif isinstance(error, permission):
+            return await ctx.send(f"You do not have the right role/sufficient permission to invoke this command.")
 
         elif isinstance(error, commands.DisabledCommand):
             return await ctx.send(f'{ctx.command} has been temporarily disabled. Please notify admin.')
@@ -41,3 +45,5 @@ class CommandErrorHandler(commands.Cogs):
         traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
 
+def setup(bot):
+    bot.add_cog(CommandErrorHandler(bot))
