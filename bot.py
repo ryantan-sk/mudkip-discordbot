@@ -1,6 +1,6 @@
 from discord.ext import commands
 
-TOKEN = 'NjM2MDczMjY2NzI0ODY0MDE1.Xa6UVA.wE-VZTMkYZV075oK2lO0ritu4BY'
+TOKEN = 'Enter your bot token here'
 
 
 def get_prefix(bot, message):
